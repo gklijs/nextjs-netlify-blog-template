@@ -1,0 +1,93 @@
+---
+slug: clojure, graphql, career, webdev
+title: The human side of open-bank-mark
+date: 2021-03-11
+author: wutali
+---
+*TL;DR: I had a great time creating [open-bank-mark](https://github.com/openweb-nl/open-bank-mark) even if your scared of parentheses you might want to check it out.*
+
+Recently I open sourced [open-bank-mark](https://github.com/openweb-nl/open-bank-mark) and a week ago at the [Kafka Meetup Utrecht](https://www.meetup.com/Kafka-Meetup-Utrecht/events/260303497/) was the fifth meetup I talked about it. During the drinks after the talk I often get questions about how it came to existence. It seemed to be like a good idea to write it down, which is what I'm doing right now.
+
+## What is open-bank-mark?
+
+{% twitter 1130516421677658114 %}
+
+Although it nowhere explicitly mentioned in the project itself, the name of the project is a combination of 'open-bank' and benchmark. 'open-bank' was the name for the frontend part before I combined everything in one project. It's a reference to my employer [Open Web](https://www.openweb.nl/) but a banking application. It's also open in the sense that the code is publicly available and there is little to no security. The last part I added makes it possible to run benchmarks. For example you could switch out components for equivalent ones in another language. After running both on some environment the latency and the use of both cpu and memory of the different parts can be compared.
+
+{% github openweb-nl/open-bank-mark %}
+
+The passion project is kind of organically grown over the course of about one and a half years. With sometimes a month of not doing anything about it, and sometimes a month of working on it almost every evening in order to get sufficient progress for the next meetup. I used call projects like these pet projects, but never really liked how it sounded. Thanks to the article, [Why every developer should have a passion project](https://clubhouse.io/blog/why-every-developer-should-have-a-passion-project), I now have a better name for such projects.
+
+What's next will be a roughly chronological story about the different stages of development of open-bank-mark.
+
+## Kafka platform at Rabobank
+
+A big part of the project revolves around Kafka. It's used to decouple different components and also to make it potentially scalable. Kafka was the first of some of the tech that plays an important role in open-bank-mark I got acquainted with.
+
+I started working with Kafka in November 2015 when I was working at the [Rabobank](https://www.rabobank.nl/particulieren/) on what would later would become the [Axual platform](https://axual.com/platform/). Previous to my start a demo was created to make people enthusiastic about Kafka. The demo showed the balances of fictional accounts, with notifications when a certain condition was met. It was kind of similar to what open-bank-mark would be. But the transactions where not executed by commands and there were a fixed amount of accounts.
+ 
+I learned a great deal creating the client library part. One thing in particular I learned was that is is hard to write concurrent code with Java. The Kafka Consumer not being safe for multi-threaded access made it even harder. Which was one of the reasons that would get me interested in Clojure later on.
+
+## Clojure for the Brave and True
+
+During the summer of 2016 I read [Clojure for the Brave and True](https://www.braveclojure.com/clojure-for-the-brave-and-true/). It was fun and clear book to read. But when it came to actual programming I had a hard time to use [Emacs](https://www.gnu.org/software/emacs/) like the book prescribed.
+
+Only some months later I learned about [Cursive](https://cursive-ide.com/) which was a plugin for the IDE I was already familiar with, [IntelliJ](https://www.jetbrains.com/idea/). It was a nice refreshing language, with some of the first passion projects being a [snake game](https://github.com/gklijs/snake) with the frontend with Clojurescript. It's nice to be able to use the same code for the backend and frontend. Even the game itself can be viewed in the browser or with Java using the same library.
+
+Later on I added some rule based artificial intelligence to the snake game. I presented the snake game, together with a client for it at one of our 'Open Pizza' sessions on the fourth of May. An 'Open Pizza' session is like a regular meetup, but only for employees of Open Web.
+
+## Kafka workshop
+
+About a year after the snake game it was time for another presentation at  'Open Pizza'. I wanted to do a Kafka workshop, to share some of my experience with it. Both event sourcing and GraphQL where the subject of 'Open Pizza' before I started preparing my talk. Both of them where demonstrated using Java, so I wanted to do something using both, with Kafka and Clojure.
+
+And so I started with the first parts of open-bank-mark. Since I build most of it evening I quickly became annoyed with having to set the correct topics and schema's each time. So that's why I added some tooling to set those based on some [edn files](https://clojure.org/reference/reader#_extensible_data_notation_edn).
+
+In advance I only wanted to build the backend part. But after I had that ready I couldn't resist to give it a try to create a frontend using Clojurescript. I quickly got something working, using [re-graph](https://github.com/oliyh/re-graph) for the GraphQL logic, and [Bulma](https://github.com/jgthms/bulma) for the css. I was pretty happy with it, and since the Clojure meetup at 14 February had an open slot I did a talk showing what I had so far. It was nice to share the project and I got some valuable feedback.
+
+Almost two months later, 5 April 2018 it was finally time to do an open pizza talk again. Turned out I focused a but too much on it being a workshop. I did have both for frontend and backend thought of things that could be improved. But I didn't have a proper introduction of the whole project to make clear what the meaning was.
+
+I also added the Kotlin variant of the [Command Handler](https://github.com/openweb-nl/open-bank-mark#command-handler) just before the talk. I created it mostly as a non Clojure JVM example. But besides making it more complex as a whole it also caused my live demo to fail. This was because while running Clojure, some values in the database were null, and Kotlin expected them to always have values based on the data types. I did test both variants separately but I didn't test the switching before. Also an important lesson, when doing live demo's make sure you only do things you did before, and not something different.
+
+Because of the complexity and not having a proper introduction, only a few people actually started coding. Creating a different frontend was also not without problems since there were some CORS issues when using Angular that I could not solve quickly.
+ 
+## Rust 2018 edition release party
+
+Before I heard there would be a [2018 edition release party](https://www.meetup.com/Rust-Gouda/events/254877742/) on 7 February this year, I had already done a few things with [Rust](https://www.rust-lang.org/). You can read more about at [here](https://www.openweb.nl/nieuws/2019/02/gerard-zijn-ervaring-met-rust.html). At the release party there would be a total of 6 talks and also some demo's so speaking time was limited.
+
+I already wrote the Rust variant of the Command Handler, and in order to do that I needed something to change the bytes I received from Kafka, with the schema from the schema registry, to typed data I could use in Rust. Trying out several combinations of existing libraries I got it working. Also my experience with the Rabobank helped a lot, since I already had a good grasp on how this worked with Java. Especially since we wrote out own serialisers wrapping the Confluent Avro serialiser.
+
+As part of learning Rust I wanted to turn the serialiser into a proper library, or a crate since that's how they are called in Rust. It's currently at 1.0.0 and can be found on [crates.io](https://crates.io/crates/schema_registry_converter). In order to make it a crate I not only put the code together, but also made it more generic. I also added some features to make it equivalent to the Java library that does the same. Another thing I did was adding unit and integration tests, and start used [codecov](https://codecov.io/gh/gklijs/schema_registry_converter) to track code coverage.
+
+{% slideshare yO9H5sb5u9gXa6 %}
+
+The release party was my first Rust meetup and the first time I needed to wear a microphone so that got me a bit nervous. I think because of the nerves I went a bit too fast trough my slides. From some of the questions it wasn't all that clear what I did exactly. I also showed me bank demo, but most people were looking at the demo with web assembly witch happened at the same time, also some people where leaving since the demo's were the last part of the program. It was a nice setup with some people showing projects that where running in production, or almost there.
+
+## Kafka Meetup Utrecht
+
+I also sometimes tweeted about open-bank-mark and got asked by a former colleague to present at the [Kafka Meetup Utrecht](https://www.meetup.com/Kafka-Meetup-Utrecht/). The talk was planned for 28 May this year. Since it was a Kafka meetup, and one of the reasons Kafka is often used is performance, I would seem look a good idea to try to compare the different implementations of the Command Handler.
+
+In preparation for the Open Pizza the year before I already started making a test of the frontend, using [etaoin](https://github.com/igrishaev/etaoin) with the chrome webdriver. So in order to to end-to-end performance testing I needed to complete that and eventually had a way of making transactions and validating then while measuring the time it took.
+
+Then I created some code around it to be able to do actual testing. I first tried a library that would use the pid of the process to measure cpu usage and memory bit it was tedious to get the correct pid each time. Also I doubted the measurements. The next way to improve was to use docker to set the project up. This way I could name the containers and didn't needed the pid's anymore. I used [lispyclouds/clj-docker-client](https://github.com/lispyclouds/clj-docker-client) to measure cpu and memory of the Docker containers, after my pull request was merged to add that feature. Using Docker has some other benefits like making it easier to switch JDK's. I ran it for some nights on my laptop, getting rid of some bugs that were sometimes break the testing program.
+
+Now I was able to generate a lot of data, but didn't have a way to visualize it yet. I ended up using a combination of [kixi.stats](https://github.com/MastodonC/kixi.stats) to preprocess the data and [oz](https://github.com/metasoarous/oz) to generate html with some [vega](https://vega.github.io/) imports to show the data. The results can be viewed from the background tab on [open bank](https://open-bank.gklijs.tech/). Now I really want to add routing to the frontend, but I better don't else the project keeps ongoing forever.
+
+Just before the presentation I figured I could also use the other Rust Kafka Library. I ignored it first time cause it didn't seem well maintained. It still isn't, but people are using it and creating issues on github. Also being a native rust solution it was possible to get a tiny docker image easily.
+
+{% twitter 1132220825912979457 %}
+
+Despite a strike of the public transport that day the meetup went through and about thirty people showed up. Since I had a lot of time to prepare for this talk and there would be around fifty people coming, I really wanted to do a proper job preparing. But I also found some small errors either in the code or the test setup. So only had my slides ready just the night before the presentation. Leaving me without time to exercise it out loud. Which caused me to sometimes search for words a little, but on overall I was quite pleased with how it went. The slides from the presentation are available.
+
+{% slideshare bIEQ0qXtIlunJx %}
+
+## What to do next?
+
+I've had several positive reactions from open sourcing and sharing the project. It's also added to the [lacinia docs](https://lacinia.readthedocs.io/en/latest/samples.html) as an example project. I don't use twitter very actively so it was quit nice to have [scicloj](https://twitter.com/scicloj) mention me.
+
+{% twitter 1133853325164711936 %}
+
+The last additions to open-bank-mark were some small improvements to the documentations. Also I thought it would be cleaner to leave only master and the 'one-broker' branch in the main project, and move the variants to my own fork. At the same time I added a variants section to the readme witch could host links to other variants. I don't know if I'll spend much more time on the project. I would like to give crux a try through.
+
+{% github juxt/crux %}
+
+Please let me know what you think of the story and/or of the project.
