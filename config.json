@@ -1,17 +1,12 @@
 {
   "base_url": "https://blog.gklijs.tech",
-  "site_title": "Next.js Netlify Blog",
-  "site_description": "Next.js blog template for Netlify",
+  "site_title": "Gerard's blog",
+  "site_description": "Blogs about Clojure, Graphql, Rustlang and other tech.",
   "site_keywords": [
-    {
-      "keyword": "Next.js"
-    },
-    {
-      "keyword": "Netlify"
-    },
-    {
-      "keyword": "React"
-    }
+    "Clojure",
+    "Rustlang",
+    "Kafka",
+    "GraphQL"
   ],
   "posts_per_page": 5,
   "twitter_account": "@GKlijs",
