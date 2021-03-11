@@ -1,0 +1,55 @@
+---
+slug: obm4
+title: Experience speaking at GraphQL Summit
+date: 2019-11-10
+author: gklijs
+tags:
+  - graphql
+  - kafka
+  - webdev
+---
+![Golden Gate Bridge](public/images/bx72z1xoxa8immg0sxs5.webp)
+
+See the series for the previous part of the story, or visit the [demo](https://graphql.gklijs.tech/), [github](https://github.com/openweb-nl/kafka-graphql-examples) or [video](https://www.youtube.com/watch?v=EN73NiR8xZI) directly.
+
+## Preparing for GraphQL Summit
+
+In order to prepare to speak at Graphql Summit I practiced the talk 5 times with other people present. The first time I wasn't ready and only that morning I put some slides together. It was worth the trouble through as I got a lot of feedback. With one of the most important things that there wasn't really clear what the story was.
+
+I gradually improved the slides, making the story more concise, also because I only had 25 minutes. And while I could make some assumptions on people already knowing GraphQL, I could not do the same for Kafka. So I added a very short introduction to Kafka.
+
+The fourth time I practiced my Presentation I got a compliment from someone that was not a developer herself, that she understood the story. I didn't change much after that.
+
+## Just before the talk
+
+Flying on my own to the USA was quite an experience on it's own. I never flew alone before, but it's not really that different from going with someone. Just that it's just me finding out where and when to go, but it turned out fine.
+
+After landing I wanted to use the BART to get to the hotel. The machines for the tickets are not user friendly, luckily there was a guard explaining how they worked. When I arrived at my hotel room, I wanted to charge my laptop again, that I also used in the plane. It turned out I didn't bring the correct converter with me. So after visiting some places, I finally succeeded at the Mac Store.
+
+Going back I only had little time before getting ready to meet the other speakers while having dinner. It was really nice to meet so many interesting people.
+
+When I came back in the Hotel I wanted to finish something I started just before leaving, trying to run the demo backend on a remote machine using docker. The big problem was that because the frontend was running on https using Netlify the backend websocket had to be wss instead of ws as wel. Eventually I worked it out. I also tried the clicker I brought with me, to not have any surprises the next day.
+
+## Day of the presentation, first day of GraphQL Summit
+
+Conveniently the summit was held in the hotel I was staying. So I got downstairs for some breakfast. Usually at large conferences you have to eat standing, and wait for some time in the line to grab something. I was pleasantly surprised it was both a decent breakfast and that there where enough tables to sit down.
+
+After keynotes from Matt DeBergalis, explaining mainly the current and future state of GraphQL, and the talk talk from Brie Bunge about how you can start using GraphQL in a big company, there was a break before splitting up in three different tracks.
+
+Because my talk was the second one in the Bayview room I went there on time. There where several people present from the organization that put me on easy, and also hard me wired up before the first talk started.
+
+I was quite nervous, but also happy once I could start to get my presentation over with. During the start of my presentation people kept walking in the room. Because I took quite some time to introduce myself and what I was going to tell, they didn't miss much and I pretty much just continued the presentation. Aside from the url for the demo not being on the slides themselves, causing it to take sometime before people joined the demo it went fine.
+
+{% youtube EN73NiR8xZI %}
+
+## After the talk
+
+It was great seeing all the other presentations while no longer having to worry about my own. Also some people had additional questions or tried to read the source code which was great. During lunch they also had this great idea of having tables where certain topics could be discussed. I would really like to see that at other conferences as well.
+
+Just today I also finished a Java Spring boot implementation of the GraphQL endpoint. The Kotlin GraphQL server library also seems great, so I really want to give that a try. Maybe I also add both Rust and Node.js so I could compare the bunch.
+
+For the query part I want to experiment with Hasura and Postgraphile using the current PostgreSQL Database. But I'm also interested in changing the database to either Neo4j, Dgraph or FaunaDB. It should make certain parts easier, and also give access to some advanced features like mutations and pagination.
+
+I'm less sure after the summit subscriptions are a good fit when using Kafka and GraphQL. Especially because some tools don't work with subscriptions and they are hard to scale. To put something on Kafka it could also be enough just to know it was successfully send. Using queries for the derived view, the clients could make sure the command was properly processed.
+
+Just before leaving for the summit I got notice of [arboric](https://gitlab.com/arboric/arboric), which is also something I want to get some experience with. As it seems to be able to handle a few things like authorization and authentication in a nice way. It might even bee used to make subscriptions scalable in a nice way, by directing users to the 'correct' instance based on their token.
