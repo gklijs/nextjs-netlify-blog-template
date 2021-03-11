@@ -3,10 +3,18 @@
   "site_title": "Gerard's blog",
   "site_description": "Blogs about Clojure, Graphql, Rustlang and other tech.",
   "site_keywords": [
-    "Clojure",
-    "Rustlang",
-    "Kafka",
-    "GraphQL"
+    {
+      "keyword": "Clojure"
+    },
+    {
+      "keyword": "Rustlang"
+    },
+    {
+      "keyword": "Kafka"
+    },
+    {
+      "keyword": "GraphQL"
+    }
   ],
   "posts_per_page": 5,
   "twitter_account": "@GKlijs",
